@@ -46,14 +46,16 @@ void printOutMatrix(int** matrix, int m, int n)
 std::vector<int> minSumPath;
 int minPathSum = INT_MAX;		
 
-const int rows = 3;
-const int cols = 3;
+const int rows = 2;
+const int cols = 2;
 int totalFuncCalls = 0;
 
-void dfsMinSumPath(int** matrix, int row, std::vector<int> path, int sum)
+void dfsMinSumPath(int** matrix, int row, std::vector<int>& path, int sum)
 {
 	//std::cout << "row: " << row << std::endl;
 	totalFuncCalls++;
+
+	std::cout << "LHJ address is " << &path << std::endl;
 
 	if (row == rows)
 	{
