@@ -1,0 +1,91 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RobotNumberOfWayToMove
+{
+    class RobotWays
+    {
+
+        private int[,] ways;
+        private int row, col;
+
+        public RobotWays(int r, int c)
+        {
+            if ((r < 0) || (c < 0))
+                throw new ArgumentOutOfRangeException("rows or cols is not right");
+
+            row = r;
+            col = c;
+
+            ways = new int[row, col];
+
+            for (int i = 1; i < row; ++i)
+                for (int j = 1; j < col; ++j)
+                    ways[i, j] = -1;
+
+            for (int i = 0; i < row; ++i)
+            {
+                ways[i, 0] = 1;
+            }
+            for (int j = 0; j < col; ++j)
+            {
+                ways[0, j] = 1;
+            }
+        }
+
+        public static int RecursiveWay(int row, int col)
+        {
+            if ((row == 1) || (col == 1))
+                return 1;
+
+            int fromLeft = RecursiveWay(row - 1, col);
+            int fromTop = RecursiveWay(row, col - 1);
+
+            return fromLeft + fromTop;
+        }
+
+        private int NumberOfWaysDP()
+        {
+            return DynamicWay(row - 1, col - 1);
+        }
+        private int DynamicWay(int row, int col)
+        {            
+            if (ways[row, col] == -1)
+                ways[row, col] = DynamicWay(row - 1, col) + DynamicWay(row, col - 1);
+
+            return ways[row, col];            
+        }        
+
+        static void Main(string[] args)
+        {
+            int row = 5;
+            int col = 9;
+
+            int numberOfWays = RecursiveWay(row, col);
+
+            Console.WriteLine("With {0}*{1} layout, there are {2} ways to reach the destination.", row, col, numberOfWays);
+
+            RobotWays rob1 = new RobotWays(row, col);
+            Console.WriteLine("With {0}*{1} layout, there are {2} ways to reach the destination.", row, col, rob1.NumberOfWaysDP());
+
+            try
+            {
+                RobotWays rob2 = new RobotWays(-4, 5);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine();
+                Console.WriteLine("***************");
+                Console.WriteLine("Failed to create an Robot instance. Err: {0}", e.ToString());
+                Console.WriteLine("***************");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("Testing done");
+
+        }
+    }
+}
