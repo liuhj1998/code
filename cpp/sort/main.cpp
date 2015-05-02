@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstdlib>
 
-const int arraySize = 15;
+const int arraySize = 5;
 const int arrayMaxValue = 99;
 
 
@@ -178,6 +178,65 @@ void sortArrayWithHeapSort(int arr[], int size)
     }
 }
 
+int median(int a, int b, int c)
+{
+    if ((a <= b) && (b <= c))
+        return b;
+
+    if ((a <= c) && (c <= b))
+        return c;
+
+    return a;
+}
+
+void quickSort(int arr[], int left, int right)
+{
+    // first, check input params
+
+    // end condition
+    if (left >= right)
+        return;
+
+    int middle = left + (right - left) / 2;
+    //int pivot = median(arr[left], arr[middle], arr[right]);
+    int pivot = arr[middle];
+
+    int lIndex = left;
+    int rIndex = right;
+
+    while (lIndex < rIndex)
+    {
+        while (arr[lIndex] <  pivot)
+            lIndex++;
+        while (arr[rIndex] > pivot)
+            rIndex--;
+
+        if (lIndex <= rIndex)
+        {
+            swap(arr, lIndex, rIndex);
+
+            lIndex++;
+            rIndex--;
+        }
+    }
+
+//    if (left < rIndex)
+//        quickSort(arr, left, rIndex);
+        quickSort(arr, left, lIndex);
+  //  if (lIndex < right)
+        quickSort(arr, lIndex, right);
+  //  if (lIndex < right)
+  //  if (lIndex < right)
+  //      quickSort(arr, lIndex, right);    
+}
+
+void sortArrayWithQuickSort(int arr[], int size)
+{
+    // first check input params
+
+   quickSort(arr, 0, size - 1);
+}
+
 bool isSorted(int arr[], int size, bool ascending)
 {
     // first check input params
@@ -246,7 +305,15 @@ int main()
     else
         std::cout << "The array is not sorted" << std::endl;
 
-    return 1;
+    std::cout << std::endl << std::endl;
+    std::cout << " ==== Quick Sort ==== " << std::endl;
+    generateArray(arr, arraySize);
+    sortArrayWithQuickSort(arr, arraySize);
 
-    std::cout << " ==== Merging Sort ==== " << std::endl;
+    if (isSorted(arr, arraySize, true))
+        std::cout << "The array is sorted" << std::endl;
+    else
+        std::cout << "The array is not sorted" << std::endl;
+
+    return 1;
 }
