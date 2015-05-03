@@ -6,3 +6,5 @@ Added a line in master branch
 Added a 2nd line in master branch
 
 added a line to fiex bug123
+
+added 2nd fix for bug123
