@@ -5,6 +5,11 @@ Added a line in master branch
 
 Added a 2nd line in master branch
 
+Fiexed bug444
 added a line to fiex bug123
 
+<<<<<<< HEAD
 added 2nd fix for bug123
+=======
+asdf
+>>>>>>> bug444
